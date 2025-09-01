@@ -1,17 +1,49 @@
 /**
- *  DIM-Client-Example (v1.0.0)
+ *  DIM-Client-Example (v2.0.0)
  *  (DIMP: Decentralized Instant Messaging Protocol)
  *
  * @author    moKy <albert.moky at gmail.com>
- * @date      Nov. 27, 2024
- * @copyright (c) 2024 Albert Moky
+ * @date      Sep. 1, 2025
+ * @copyright (c) 2020-2025 Albert Moky
  * @license   {@link https://mit-license.org | MIT License}
  */;
 if (typeof SECHAT !== 'object') {
     SECHAT = DIMP
 }
 (function (ns) {
-    'use strict';
+    if (typeof ns.startrek !== 'object') {
+        ns.startrek = ns.network
+    }
+    if (typeof ns.dos !== 'object') {
+        ns.dos = ns.network.dos
+    }
+    if (typeof ns.lnc !== 'object') {
+        ns.lnc = ns.network.lnc
+    }
+    var CommonExtensionLoader = ns.compat.CommonExtensionLoader;
+    var CommonPluginLoader = ns.compat.CommonPluginLoader;
+    ns.compat.LibraryLoader = function (extensionLoader, pluginLoader) {
+        this.__extensions = extensionLoader || new CommonExtensionLoader();
+        this.__plugins = pluginLoader || new CommonPluginLoader();
+        this.__loaded = false
+    };
+    var LibraryLoader = ns.compat.LibraryLoader;
+    LibraryLoader.prototype.run = function () {
+        if (this.__loaded) {
+            return;
+        } else {
+            this.__loaded = true;
+        }
+        this.load();
+    };
+    LibraryLoader.prototype.load = function () {
+        this.__extensions.load();
+        this.__plugins.load();
+    };
+    var loader = new LibraryLoader(null, null);
+    loader.run()
+})(DIMP);
+(function (ns) {
     var NotificationNames = {
         StationConnecting: 'StationConnecting',
         StationConnected: 'StationConnected',
@@ -32,7 +64,6 @@ if (typeof SECHAT !== 'object') {
     ns.NotificationNames = NotificationNames
 })(SECHAT);
 (function (ns, sdk) {
-    'use strict';
     var Hex = sdk.format.Hex;
     var UTF8 = sdk.format.UTF8;
     var MD5 = sdk.digest.MD5;
@@ -231,7 +262,6 @@ if (typeof SECHAT !== 'object') {
     ns.network.FtpServer = FtpServer
 })(SECHAT, DIMP);
 (function (ns) {
-    'use strict';
     var Interface = ns.type.Interface;
     var Class = ns.type.Class;
     var FileContent = ns.protocol.FileContent;
@@ -275,7 +305,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.AnyContentProcessor = AnyContentProcessor
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var BaseCommandProcessor = ns.cpu.BaseCommandProcessor;
     var BlockCommandProcessor = function (facebook, messenger) {
@@ -288,7 +317,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.BlockCommandProcessor = BlockCommandProcessor
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var BaseCommandProcessor = ns.cpu.BaseCommandProcessor;
     var MuteCommandProcessor = function (facebook, messenger) {
@@ -301,7 +329,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.MuteCommandProcessor = MuteCommandProcessor
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Meta = ns.protocol.Meta;
@@ -362,7 +389,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.SearchCommandProcessor = SearchCommandProcessor
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var StorageCommand = ns.protocol.StorageCommand;
     var BaseCommandProcessor = ns.cpu.BaseCommandProcessor;
@@ -380,7 +406,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.StorageCommandProcessor = StorageCommandProcessor
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Interface = ns.type.Interface;
     var Log = ns.lnc.Log;
     var ID = ns.protocol.ID;
@@ -392,11 +417,11 @@ if (typeof SECHAT !== 'object') {
     var VideoContent = ns.protocol.VideoContent;
     var LoginCommand = ns.protocol.LoginCommand;
     var GroupCommand = ns.protocol.GroupCommand;
-    var InviteCommand = ns.protocol.group.InviteCommand;
-    var ExpelCommand = ns.protocol.group.ExpelCommand;
-    var QuitCommand = ns.protocol.group.QuitCommand;
-    var ResetCommand = ns.protocol.group.ResetCommand;
-    var QueryCommand = ns.protocol.group.QueryCommand;
+    var InviteCommand = ns.protocol.InviteCommand;
+    var ExpelCommand = ns.protocol.ExpelCommand;
+    var QuitCommand = ns.protocol.QuitCommand;
+    var ResetCommand = ns.protocol.ResetCommand;
+    var QueryCommand = ns.protocol.QueryCommand;
     var MessageBuilder = {
         getContentText: function (content) {
             var text = content.getString('text');
@@ -528,7 +553,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.MessageBuilder = MessageBuilder
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var Command = ns.protocol.Command;
     var ClientContentProcessorCreator = ns.cpu.ClientContentProcessorCreator;
@@ -565,7 +589,6 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.ClientProcessorCreator = ClientProcessorCreator
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Storage = ns.dos.LocalStorage;
@@ -627,7 +650,6 @@ if (typeof SECHAT !== 'object') {
     ns.database.UserStorage = UserStorage
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Storage = ns.dos.LocalStorage;
@@ -696,7 +718,6 @@ if (typeof SECHAT !== 'object') {
     ns.database.GroupStorage = GroupStorage
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var Command = ns.protocol.Command;
     var ReliableMessage = ns.protocol.ReliableMessage;
@@ -730,7 +751,6 @@ if (typeof SECHAT !== 'object') {
     ns.database.LoginStorage = LoginStorage
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var MessageStorage = function () {
@@ -850,7 +870,6 @@ if (typeof SECHAT !== 'object') {
     ns.database.MessageStorage = MessageStorage
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var SymmetricKey = ns.crypto.SymmetricKey;
     var Storage = ns.dos.SessionStorage;
@@ -877,7 +896,6 @@ if (typeof SECHAT !== 'object') {
     ns.database.CipherKeyStorage = CipherKeyStorage
 })(DIMP);
 (function (ns) {
-    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Storage = ns.dos.LocalStorage;
@@ -967,7 +985,6 @@ if (typeof SECHAT !== 'object') {
     ns.database.ProviderStorage = ProviderStorage
 })(DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Hex = sdk.format.Hex;
     var Configuration = {
         getInstance: function () {
@@ -1006,7 +1023,6 @@ if (typeof SECHAT !== 'object') {
     ns.Configuration = Configuration
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Interface = sdk.type.Interface;
     var ContentType = sdk.protocol.ContentType;
     var Entity = sdk.mkm.Entity;
@@ -1106,7 +1122,6 @@ if (typeof SECHAT !== 'object') {
     ns.Conversation = Conversation
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Interface = sdk.type.Interface;
     var Arrays = sdk.type.Arrays;
     var Log = sdk.lnc.Log;
@@ -1118,8 +1133,8 @@ if (typeof SECHAT !== 'object') {
     var MetaCommand = sdk.protocol.MetaCommand;
     var SearchCommand = sdk.protocol.SearchCommand;
     var ForwardContent = sdk.protocol.ForwardContent;
-    var InviteCommand = sdk.protocol.group.InviteCommand;
-    var QueryCommand = sdk.protocol.group.QueryCommand;
+    var InviteCommand = sdk.protocol.InviteCommand;
+    var QueryCommand = sdk.protocol.QueryCommand;
     var Conversation = ns.Conversation;
     var clerk = {conversations: null, conversationMap: {}};
     var Amanuensis = {
@@ -1165,7 +1180,7 @@ if (typeof SECHAT !== 'object') {
             for (var i = 0; i < all.length; ++i) {
                 chat = all[i];
                 if (chat.getIdentifier().isGroup()) {
-                } else if (EntityType.STATION.equals(chat.getIdentifier().getType())) {
+                } else if (EntityType.STATION === chat.getIdentifier().getType()) {
                 } else if (chat.isBlocked()) {
                 } else if (chat.isFriend()) {
                 } else {
@@ -1279,7 +1294,6 @@ if (typeof SECHAT !== 'object') {
     ns.Amanuensis = Amanuensis
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var SymmetricKey = sdk.crypto.SymmetricKey;
     var PlainKey = sdk.crypto.PlainKey;
     var PrivateKeyStorage = sdk.database.PrivateKeyStorage;
@@ -1585,7 +1599,6 @@ if (typeof SECHAT !== 'object') {
     ns.SharedDatabase = SharedDatabase
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Interface = sdk.type.Interface;
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
@@ -1601,7 +1614,7 @@ if (typeof SECHAT !== 'object') {
         var rMsg;
         var receiver = iMsg.getReceiver();
         if (receiver.isGroup()) {
-            var manager = sdk.group.SharedGroupManager;
+            var manager = sdk.group.SharedGroupManager.getInstance();
             rMsg = manager.sendInstantMessage(iMsg, priority)
         } else {
             var messenger = ns.GlobalVariable.getMessenger();
@@ -1673,11 +1686,10 @@ if (typeof SECHAT !== 'object') {
     ns.Emitter = Emitter
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Class = sdk.type.Class;
     var ClientFacebook = sdk.ClientFacebook;
-    var SharedFacebook = function () {
-        ClientFacebook.call(this)
+    var SharedFacebook = function (database) {
+        ClientFacebook.call(this, database)
     };
     Class(SharedFacebook, ClientFacebook, null, {
         getAvatar: function (identifier) {
@@ -1688,13 +1700,10 @@ if (typeof SECHAT !== 'object') {
             return null
         }
     });
-    SharedFacebook.prototype.getArchivist = function () {
-        return ns.GlobalVariable.getArchivist()
-    };
     SharedFacebook.prototype.createGroup = function (identifier) {
         var group = null;
         if (!identifier.isBroadcast()) {
-            var man = sdk.group.SharedGroupManager;
+            var man = sdk.group.SharedGroupManager.getInstance();
             var doc = man.getBulletin(identifier);
             if (doc) {
                 group = ClientFacebook.prototype.createGroup.call(this, identifier);
@@ -1706,12 +1715,11 @@ if (typeof SECHAT !== 'object') {
     ns.SharedFacebook = SharedFacebook
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
     var ClientArchivist = sdk.ClientArchivist;
-    var SharedArchivist = function (db) {
-        ClientArchivist.call(this, db)
+    var SharedArchivist = function (facebook, database) {
+        ClientArchivist.call(this, facebook, database)
     };
     Class(SharedArchivist, ClientArchivist, null, null);
     SharedArchivist.prototype.getFacebook = function () {
@@ -1769,7 +1777,6 @@ if (typeof SECHAT !== 'object') {
     ns.SharedArchivist = SharedArchivist
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Interface = sdk.type.Interface;
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
@@ -1852,7 +1859,8 @@ if (typeof SECHAT !== 'object') {
                 Log.error('failed to sign visa', visa, sKey);
                 return false
             }
-            var ok = facebook.saveDocument(visa);
+            var archivist = facebook.getArchivist();
+            var ok = archivist.saveDocument(visa);
             if (ok) {
                 Log.info('visa updated', visa)
             } else {
@@ -1912,7 +1920,6 @@ if (typeof SECHAT !== 'object') {
     ns.SharedMessenger = SharedMessenger
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Interface = sdk.type.Interface;
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
@@ -1939,7 +1946,6 @@ if (typeof SECHAT !== 'object') {
     ns.SharedPacker = SharedPacker
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
     var ClientMessageProcessor = sdk.ClientMessageProcessor;
@@ -1971,12 +1977,11 @@ if (typeof SECHAT !== 'object') {
     ns.SharedProcessor = SharedProcessor
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
     var NotificationCenter = sdk.lnc.NotificationCenter;
     var SessionStateOrder = sdk.network.SessionStateOrder;
-    var Terminal = sdk.network.Terminal;
+    var Terminal = sdk.Terminal;
     var NotificationNames = ns.NotificationNames;
     var Client = function (facebook, sdb) {
         Terminal.call(this, facebook, sdb)
@@ -2008,8 +2013,8 @@ if (typeof SECHAT !== 'object') {
                 return 'Disconnected'
             }
         }, reconnect: function () {
-            return this.connect('106.52.25.169', 9394);
-            return this.connect('170.106.141.194', 9394);
+            // return this.connect('106.52.25.169', 9394);
+            // return this.connect('170.106.141.194', 9394);
             return this.connect('129.226.12.4', 9394);
             var station = this.getNeighborStation();
             if (!station) {
@@ -2050,16 +2055,7 @@ if (typeof SECHAT !== 'object') {
     ns.Client = Client
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    'use strict';
-    var shared = {
-        database: null,
-        archivist: null,
-        facebook: null,
-        session: null,
-        messenger: null,
-        emitter: null,
-        terminal: null
-    };
+    var shared = {database: null, facebook: null, session: null, messenger: null, emitter: null, terminal: null};
     var GlobalVariable = {
         getDatabase: function () {
             var database = shared.database;
@@ -2068,20 +2064,15 @@ if (typeof SECHAT !== 'object') {
                 shared.database = database
             }
             return database
-        }, getArchivist: function () {
-            var archivist = shared.archivist;
-            if (!archivist) {
-                var database = this.getDatabase();
-                archivist = new ns.SharedArchivist(database);
-                shared.archivist = archivist
-            }
-            return archivist
         }, getFacebook: function () {
             var facebook = shared.facebook;
             if (!facebook) {
-                facebook = new ns.SharedFacebook();
+                var db = this.getDatabase();
+                facebook = new ns.SharedFacebook(db);
+                facebook.setBarrack(new ns.SharedArchivist(facebook, db));
+                facebook.setEntityChecker(new ns.ClientChecker(facebook, db));
                 shared.facebook = facebook;
-                var sgm = sdk.group.SharedGroupManager;
+                var sgm = sdk.group.SharedGroupManager.getInstance();
                 sgm.setFacebook(facebook)
             }
             return facebook
@@ -2094,7 +2085,7 @@ if (typeof SECHAT !== 'object') {
                 if (session) {
                     messenger = new ns.SharedMessenger(session, facebook, database);
                     shared.messenger = messenger;
-                    var sgm = sdk.group.SharedGroupManager;
+                    var sgm = sdk.group.SharedGroupManager.getInstance();
                     sgm.setMessenger(messenger)
                 } else {
                     throw new ReferenceError('session not connected');

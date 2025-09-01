@@ -35,7 +35,6 @@
 
     var shared = {
         database: null,
-        archivist: null,
         facebook: null,
 
         session: null,
@@ -57,23 +56,16 @@
             return database;
         },
 
-        getArchivist: function () {
-            var archivist = shared.archivist;
-            if (!archivist) {
-                var database = this.getDatabase();
-                archivist = new ns.SharedArchivist(database);
-                shared.archivist = archivist;
-            }
-            return archivist;
-        },
-
         getFacebook: function () {
             var facebook = shared.facebook;
             if (!facebook) {
-                facebook = new ns.SharedFacebook();
+                var db = this.getDatabase();
+                facebook = new ns.SharedFacebook(db);
+                facebook.setBarrack(new ns.SharedArchivist(facebook, db));
+                facebook.setEntityChecker(new ns.ClientChecker(facebook, db));
                 shared.facebook = facebook;
                 // group manager
-                var sgm = sdk.group.SharedGroupManager;
+                var sgm = sdk.group.SharedGroupManager.getInstance();
                 sgm.setFacebook(facebook);
             }
             return facebook;
@@ -93,7 +85,7 @@
                     messenger = new ns.SharedMessenger(session, facebook, database);
                     shared.messenger = messenger;
                     // group manager
-                    var sgm = sdk.group.SharedGroupManager;
+                    var sgm = sdk.group.SharedGroupManager.getInstance();
                     sgm.setMessenger(messenger);
                 } else {
                     throw new ReferenceError('session not connected');

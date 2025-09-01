@@ -43,11 +43,11 @@
 
     var LoginCommand  = ns.protocol.LoginCommand;
     var GroupCommand  = ns.protocol.GroupCommand;
-    var InviteCommand = ns.protocol.group.InviteCommand;
-    var ExpelCommand  = ns.protocol.group.ExpelCommand;
-    var QuitCommand   = ns.protocol.group.QuitCommand;
-    var ResetCommand  = ns.protocol.group.ResetCommand;
-    var QueryCommand  = ns.protocol.group.QueryCommand;
+    var InviteCommand = ns.protocol.InviteCommand;
+    var ExpelCommand  = ns.protocol.ExpelCommand;
+    var QuitCommand   = ns.protocol.QuitCommand;
+    var ResetCommand  = ns.protocol.ResetCommand;
+    var QueryCommand  = ns.protocol.QueryCommand;
 
     //
     //  Message Text Builder

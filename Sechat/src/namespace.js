@@ -32,6 +32,51 @@ if (typeof SECHAT !== 'object') {
 }
 
 (function (ns) {
+
+    if (typeof ns.startrek !== 'object') {
+        ns.startrek = ns.network;
+    }
+    if (typeof ns.dos !== 'object') {
+        ns.dos = ns.network.dos;
+    }
+    if (typeof ns.lnc !== 'object') {
+        ns.lnc = ns.network.lnc;
+    }
+
+    var CommonExtensionLoader = ns.compat.CommonExtensionLoader;
+    var CommonPluginLoader    = ns.compat.CommonPluginLoader;
+
+    ns.compat.LibraryLoader = function (extensionLoader, pluginLoader) {
+        this.__extensions = extensionLoader || new CommonExtensionLoader();
+        this.__plugins = pluginLoader || new CommonPluginLoader();
+        this.__loaded = false;
+    };
+    var LibraryLoader = ns.compat.LibraryLoader;
+
+    LibraryLoader.prototype.run = function () {
+        if (this.__loaded) {
+            // no need to load it again
+            return;
+        } else {
+            // mark it to loaded
+            this.__loaded = true;
+        }
+        // try to load all plugins
+        this.load();
+    };
+
+    LibraryLoader.prototype.load = function () {
+        this.__extensions.load();
+        this.__plugins.load();
+    };
+
+    var loader = new LibraryLoader(null, null);
+    loader.run();
+
+
+})(DIMP);
+
+(function (ns) {
     'use strict';
 
     // CONSTANTS

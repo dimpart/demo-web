@@ -42,8 +42,8 @@
     var MetaCommand      = sdk.protocol.MetaCommand;
     var SearchCommand    = sdk.protocol.SearchCommand;
     var ForwardContent   = sdk.protocol.ForwardContent;
-    var InviteCommand    = sdk.protocol.group.InviteCommand;
-    var QueryCommand     = sdk.protocol.group.QueryCommand;
+    var InviteCommand    = sdk.protocol.InviteCommand;
+    var QueryCommand     = sdk.protocol.QueryCommand;
     var Conversation     = ns.Conversation;
 
     var clerk = {
@@ -110,7 +110,7 @@
                 chat = all[i];
                 if (chat.getIdentifier().isGroup()) {
                     // skip group
-                } else if (EntityType.STATION.equals(chat.getIdentifier().getType())) {
+                } else if (EntityType.STATION === chat.getIdentifier().getType()) {
                     // skip station
                 } else if (chat.isBlocked()) {
                     // skip blocked-list

@@ -60,7 +60,7 @@
         var receiver = iMsg.getReceiver();
         if (receiver.isGroup()) {
             // send by group manager
-            var manager = sdk.group.SharedGroupManager;
+            var manager = sdk.group.SharedGroupManager.getInstance();
             rMsg = manager.sendInstantMessage(iMsg, priority);
         } else {
             // send by shared manager

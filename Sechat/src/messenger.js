@@ -149,7 +149,8 @@
                 return false;
             }
             // 5. save it
-            var ok = facebook.saveDocument(visa);
+            var archivist = facebook.getArchivist();
+            var ok = archivist.saveDocument(visa);
             if (ok) {
                 Log.info('visa updated', visa);
             } else {

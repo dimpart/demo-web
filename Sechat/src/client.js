@@ -34,7 +34,7 @@
     var Log                = sdk.lnc.Log;
     var NotificationCenter = sdk.lnc.NotificationCenter;
     var SessionStateOrder  = sdk.network.SessionStateOrder;
-    var Terminal           = sdk.network.Terminal;
+    var Terminal           = sdk.Terminal;
     var NotificationNames  = ns.NotificationNames;
 
     var Client = function (facebook, sdb) {

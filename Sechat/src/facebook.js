@@ -33,8 +33,8 @@
     var Class          = sdk.type.Class;
     var ClientFacebook = sdk.ClientFacebook;
 
-    var SharedFacebook = function () {
-        ClientFacebook.call(this);
+    var SharedFacebook = function (database) {
+        ClientFacebook.call(this, database);
     };
     Class(SharedFacebook, ClientFacebook, null, {
 
@@ -48,15 +48,10 @@
     });
 
     // Override
-    SharedFacebook.prototype.getArchivist = function () {
-        return ns.GlobalVariable.getArchivist();
-    };
-
-    // Override
     SharedFacebook.prototype.createGroup = function (identifier) {
         var group = null;
         if (!identifier.isBroadcast()) {
-            var man = sdk.group.SharedGroupManager;
+            var man = sdk.group.SharedGroupManager.getInstance();
             var doc = man.getBulletin(identifier);
             if (doc) {
                 group = ClientFacebook.prototype.createGroup.call(this, identifier);
@@ -78,8 +73,8 @@
     var Log   = sdk.lnc.Log;
     var ClientArchivist = sdk.ClientArchivist;
 
-    var SharedArchivist = function (db) {
-        ClientArchivist.call(this, db);
+    var SharedArchivist = function (facebook, database) {
+        ClientArchivist.call(this, facebook, database);
     };
     Class(SharedArchivist, ClientArchivist, null, null);
 
