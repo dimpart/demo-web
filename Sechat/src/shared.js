@@ -84,9 +84,16 @@
                 if (session/* && facebook && database*/) {
                     messenger = new ns.SharedMessenger(session, facebook, database);
                     shared.messenger = messenger;
-                    // group manager
+                    // set for group manager
                     var sgm = sdk.group.SharedGroupManager.getInstance();
                     sgm.setMessenger(messenger);
+                    // set for entity checker
+                    var checker = facebook.getEntityChecker();
+                    if (checker instanceof ns.ClientChecker) {
+                        checker.setMessenger(messenger);
+                    } else {
+                        throw new Error('entity checker error: ' + checker);
+                    }
                 } else {
                     throw new ReferenceError('session not connected');
                 }

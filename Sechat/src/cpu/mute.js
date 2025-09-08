@@ -39,7 +39,7 @@
     var MuteCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger);
     };
-    Class(MuteCommandProcessor, BaseCommandProcessor, null, null);
+    Class(MuteCommandProcessor, BaseCommandProcessor, null);
 
     // Override
     MuteCommandProcessor.prototype.process = function (content, rMsg) {

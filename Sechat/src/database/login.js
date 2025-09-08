@@ -49,7 +49,7 @@
     var LoginStorage = function () {
         Object.call(this);
     };
-    Class(LoginStorage, Object, [LoginDBI], null);
+    Class(LoginStorage, Object, [LoginDBI]);
 
     // Override
     LoginStorage.prototype.getLoginCommandMessage = function (user) {

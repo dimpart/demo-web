@@ -35,13 +35,16 @@
     'use strict';
 
     var Class                         = ns.type.Class;
+    var Implementation                = ns.type.Implementation;
     var Command                       = ns.protocol.Command;
     var ClientContentProcessorCreator = ns.cpu.ClientContentProcessorCreator;
 
     var ClientProcessorCreator = function (facebook, messenger) {
         ClientContentProcessorCreator.call(this, facebook, messenger);
     };
-    Class(ClientProcessorCreator, ClientContentProcessorCreator, null, {
+    Class(ClientProcessorCreator, ClientContentProcessorCreator, null);
+
+    Implementation(ClientProcessorCreator, {
 
         // Override
         createContentProcessor: function (type) {

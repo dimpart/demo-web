@@ -31,12 +31,15 @@
     'use strict';
 
     var Class          = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
     var ClientFacebook = sdk.ClientFacebook;
 
     var SharedFacebook = function (database) {
         ClientFacebook.call(this, database);
     };
-    Class(SharedFacebook, ClientFacebook, null, {
+    Class(SharedFacebook, ClientFacebook, null);
+
+    Implementation(SharedFacebook, {
 
         getAvatar: function (identifier) {
             var doc = this.getVisa(identifier);
@@ -76,7 +79,7 @@
     var SharedArchivist = function (facebook, database) {
         ClientArchivist.call(this, facebook, database);
     };
-    Class(SharedArchivist, ClientArchivist, null, null);
+    Class(SharedArchivist, ClientArchivist, null);
 
     // Override
     SharedArchivist.prototype.getFacebook = function () {
@@ -95,12 +98,12 @@
     };
 
     // Override
-    SharedArchivist.prototype.checkMeta = function (identifier, meta) {
+    SharedArchivist.prototype.checkMeta = function (meta, identifier) {
         if (identifier.isBroadcast()) {
             // broadcast entity has no meta to query
             return false;
         }
-        return ClientArchivist.prototype.checkMeta.call(this, identifier, meta);
+        return ClientArchivist.prototype.checkMeta.call(this, meta, identifier);
     };
 
     // Override

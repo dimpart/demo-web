@@ -31,7 +31,7 @@
     'use strict';
 
     var Class        = ns.type.Class;
-    var SymmetricKey = ns.crypto.SymmetricKey;
+    var SymmetricKey = ns.protocol.SymmetricKey;
     var Storage      = ns.dos.SessionStorage;
     var CipherKeyDBI = ns.dbi.CipherKeyDBI;
 
@@ -50,7 +50,7 @@
     var CipherKeyStorage = function () {
         Object.call(this);
     };
-    Class(CipherKeyStorage, Object, [CipherKeyDBI], null);
+    Class(CipherKeyStorage, Object, [CipherKeyDBI]);
 
     // Override
     CipherKeyStorage.prototype.getCipherKey = function (from, to, generate) {

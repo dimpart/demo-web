@@ -57,7 +57,7 @@
     var GroupStorage = function () {
         Object.call(this);
     };
-    Class(GroupStorage, Object, [GroupDBI], null);
+    Class(GroupStorage, Object, [GroupDBI]);
 
     // Override
     GroupStorage.prototype.getFounder = function (group) {

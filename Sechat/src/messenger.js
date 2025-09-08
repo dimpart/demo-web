@@ -30,9 +30,10 @@
 (function (ns, sdk) {
     'use strict';
 
-    var Interface = sdk.type.Interface;
-    var Class     = sdk.type.Class;
-    var Log       = sdk.lnc.Log;
+    var Interface      = sdk.type.Interface;
+    var Class          = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
+    var Log            = sdk.lnc.Log;
 
     var ID               = sdk.protocol.ID;
     var Document         = sdk.protocol.Document;
@@ -45,7 +46,9 @@
     var SharedMessenger = function (session, facebook, db) {
         ClientMessenger.call(this, session, facebook, db);
     };
-    Class(SharedMessenger, ClientMessenger, null, {
+    Class(SharedMessenger, ClientMessenger, null);
+
+    Implementation(SharedMessenger, {
 
         // Override
         encryptKey: function (keyData, receiver, iMsg) {

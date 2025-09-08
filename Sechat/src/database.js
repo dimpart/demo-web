@@ -30,8 +30,9 @@
 (function (ns, sdk) {
     'use strict';
 
-    var SymmetricKey = sdk.crypto.SymmetricKey;
-    var PlainKey     = sdk.crypto.PlainKey;
+    var SymmetricKey        = sdk.protocol.SymmetricKey;
+    var SymmetricAlgorithms = sdk.protocol.SymmetricAlgorithms;
+    var PlainKey = sdk.crypto.PlainKey;
 
     var PrivateKeyStorage = sdk.database.PrivateKeyStorage;
     var MetaStorage       = sdk.database.MetaStorage;
@@ -397,7 +398,7 @@
             var key = t_cipher_key.getCipherKey(from, to, generate);
             if (!key && generate) {
                 // generate new key and store it
-                key = SymmetricKey.generate(SymmetricKey.AES);
+                key = SymmetricKey.generate(SymmetricAlgorithms.AES);
                 t_cipher_key.cacheCipherKey(from, to, key);
             }
             return key;

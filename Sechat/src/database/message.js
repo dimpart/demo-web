@@ -41,7 +41,7 @@
         Object.call(this);
         this.__instant_messages = {};   // str(receiver) => InstantMessage[]
     };
-    Class(MessageStorage, Object, null, null);
+    Class(MessageStorage, Object, null);
 
     var insert_msg = function (messages, msg) {
         var pos = messages.length - 1;

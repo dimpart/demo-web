@@ -100,14 +100,14 @@
                 continue;
             }
             type = iMsg.getType();
-            if (ContentType.TEXT.equals(type) ||
-                ContentType.FILE.equals(type) ||
-                ContentType.IMAGE.equals(type) ||
-                ContentType.AUDIO.equals(type) ||
-                ContentType.VIDEO.equals(type) ||
-                ContentType.PAGE.equals(type) ||
-                ContentType.MONEY.equals(type) ||
-                ContentType.TRANSFER.equals(type)) {
+            if (ContentType.TEXT === type ||
+                ContentType.FILE === type ||
+                ContentType.IMAGE === type ||
+                ContentType.AUDIO === type ||
+                ContentType.VIDEO === type ||
+                ContentType.PAGE === type ||
+                ContentType.MONEY === type ||
+                ContentType.TRANSFER === type) {
                 // got it
                 return iMsg;
             }

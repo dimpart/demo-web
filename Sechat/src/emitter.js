@@ -46,7 +46,7 @@
     var Emitter = function () {
         Object.call(this);
     };
-    Class(Emitter, Object, null, null);
+    Class(Emitter, Object, null);
 
     /**
      *  Send instant message

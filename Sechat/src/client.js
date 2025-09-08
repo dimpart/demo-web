@@ -31,6 +31,7 @@
     'use strict';
 
     var Class              = sdk.type.Class;
+    var Implementation     = sdk.type.Implementation;
     var Log                = sdk.lnc.Log;
     var NotificationCenter = sdk.lnc.NotificationCenter;
     var SessionStateOrder  = sdk.network.SessionStateOrder;
@@ -40,7 +41,9 @@
     var Client = function (facebook, sdb) {
         Terminal.call(this, facebook, sdb);
     };
-    Class(Client, Terminal, null, {
+    Class(Client, Terminal, null);
+
+    Implementation(Client, {
 
         //
         //  Session State
@@ -76,8 +79,8 @@
 
         reconnect: function () {
             // FIXME: test
-            return this.connect('106.52.25.169', 9394);    // gz-169
-            return this.connect('170.106.141.194', 9394);  // ca-194
+            // return this.connect('106.52.25.169', 9394);    // gz-169
+            // return this.connect('170.106.141.194', 9394);  // ca-194
             return this.connect('129.226.12.4', 9394);     // hk-4
 
             var station = this.getNeighborStation();

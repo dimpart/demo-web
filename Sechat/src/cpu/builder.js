@@ -128,7 +128,11 @@
         if (station) {
             var host = station['host'];
             var port = station['port'];
-            station = '(' + host + ':' + port + ') ' + getUsername(station['ID']);
+            var sid = station['did'];
+            if (!sid) {
+                sid = station['ID'];
+            }
+            station = '(' + host + ':' + port + ') ' + getUsername(sid);
         }
         return getUsername(identifier) + ' login: ' + station;
     };

@@ -47,12 +47,19 @@
         var array = Storage.loadJSON(path);
         if (array) {
             var item;
+            var sid;
             for (var i = 0; i < array.length; ++i) {
                 item = array[i];
+                sid = item['did'];
+                if (!sid) {
+                    sid = item['ID'];
+                }
+                sid = ID.parse(sid);
                 stations.push({
                     'host': item['host'],
                     'port': item['port'],
-                    'ID': ID.parse(item['ID'])
+                    'did': sid,
+                    'ID': sid
                 });
             }
         }
@@ -71,12 +78,16 @@
             // } else {
                 host = item['host'];
                 port = item['port'];
-                sid = item['ID'];
+                sid = item['did'];
+                if (!sid) {
+                    sid = item['ID'];
+                }
             // }
             if (sid) {
                 array.push({
                     'host': host,
                     'port': port,
+                    'did': sid.toString(),
                     'ID': sid.toString()
                 });
             } else {
@@ -110,7 +121,7 @@
         Object.call(this);
         this.__stations = null;
     };
-    Class(ProviderStorage, Object, [ProviderDBI], null);
+    Class(ProviderStorage, Object, [ProviderDBI]);
 
     // Override
     ProviderStorage.prototype.allNeighbors = function () {
@@ -128,7 +139,12 @@
             // not found
             return null;
         }
-        return stations[index]['ID'];
+        var neighbor = stations[index];
+        var sid = neighbor['did'];
+        if (!sid) {
+            sid = neighbor['ID'];
+        }
+        return sid;
     };
 
     // Override
@@ -142,6 +158,7 @@
         stations.unshift({
             'host': ip,
             'port': port,
+            'did': identifier,
             'ID': identifier
         });
         return save_stations(stations);

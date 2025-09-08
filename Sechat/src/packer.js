@@ -30,9 +30,10 @@
 (function (ns, sdk) {
     'use strict';
 
-    var Interface = sdk.type.Interface;
-    var Class     = sdk.type.Class;
-    var Log       = sdk.lnc.Log;
+    var Interface      = sdk.type.Interface;
+    var Class          = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
+    var Log            = sdk.lnc.Log;
 
     var FileContent         = sdk.protocol.FileContent;
     var ClientMessagePacker = sdk.ClientMessagePacker;
@@ -40,7 +41,9 @@
     var SharedPacker = function (facebook, messenger) {
         ClientMessagePacker.call(this, facebook, messenger);
     };
-    Class(SharedPacker, ClientMessagePacker, null, {
+    Class(SharedPacker, ClientMessagePacker, null);
+
+    Implementation(SharedPacker, {
 
         // Override
         encryptMessage: function (iMsg) {

@@ -39,7 +39,7 @@
     var BlockCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger);
     };
-    Class(BlockCommandProcessor, BaseCommandProcessor, null, null);
+    Class(BlockCommandProcessor, BaseCommandProcessor, null);
 
     // Override
     BlockCommandProcessor.prototype.process = function (content, rMsg) {

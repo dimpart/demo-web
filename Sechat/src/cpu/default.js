@@ -49,7 +49,7 @@
     var AnyContentProcessor = function (facebook, messenger) {
         BaseContentProcessor.call(this, facebook, messenger);
     };
-    Class(AnyContentProcessor, BaseContentProcessor, null, null);
+    Class(AnyContentProcessor, BaseContentProcessor, null);
 
     // Override
     AnyContentProcessor.prototype.process = function (content, rMsg) {

@@ -30,20 +30,21 @@ if (typeof SECHAT !== 'object') {
     var LibraryLoader = ns.compat.LibraryLoader;
     LibraryLoader.prototype.run = function () {
         if (this.__loaded) {
-            return;
+            return
         } else {
-            this.__loaded = true;
+            this.__loaded = true
         }
-        this.load();
+        this.load()
     };
     LibraryLoader.prototype.load = function () {
         this.__extensions.load();
-        this.__plugins.load();
+        this.__plugins.load()
     };
     var loader = new LibraryLoader(null, null);
     loader.run()
 })(DIMP);
 (function (ns) {
+    'use strict';
     var NotificationNames = {
         StationConnecting: 'StationConnecting',
         StationConnected: 'StationConnected',
@@ -64,6 +65,7 @@ if (typeof SECHAT !== 'object') {
     ns.NotificationNames = NotificationNames
 })(SECHAT);
 (function (ns, sdk) {
+    'use strict';
     var Hex = sdk.format.Hex;
     var UTF8 = sdk.format.UTF8;
     var MD5 = sdk.digest.MD5;
@@ -262,6 +264,7 @@ if (typeof SECHAT !== 'object') {
     ns.network.FtpServer = FtpServer
 })(SECHAT, DIMP);
 (function (ns) {
+    'use strict';
     var Interface = ns.type.Interface;
     var Class = ns.type.Class;
     var FileContent = ns.protocol.FileContent;
@@ -275,7 +278,7 @@ if (typeof SECHAT !== 'object') {
     var AnyContentProcessor = function (facebook, messenger) {
         BaseContentProcessor.call(this, facebook, messenger)
     };
-    Class(AnyContentProcessor, BaseContentProcessor, null, null);
+    Class(AnyContentProcessor, BaseContentProcessor, null);
     AnyContentProcessor.prototype.process = function (content, rMsg) {
         var text;
         if (Interface.conforms(content, FileContent)) {
@@ -305,30 +308,33 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.AnyContentProcessor = AnyContentProcessor
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var BaseCommandProcessor = ns.cpu.BaseCommandProcessor;
     var BlockCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
-    Class(BlockCommandProcessor, BaseCommandProcessor, null, null);
+    Class(BlockCommandProcessor, BaseCommandProcessor, null);
     BlockCommandProcessor.prototype.process = function (content, rMsg) {
         return []
     };
     ns.cpu.BlockCommandProcessor = BlockCommandProcessor
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var BaseCommandProcessor = ns.cpu.BaseCommandProcessor;
     var MuteCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
-    Class(MuteCommandProcessor, BaseCommandProcessor, null, null);
+    Class(MuteCommandProcessor, BaseCommandProcessor, null);
     MuteCommandProcessor.prototype.process = function (content, rMsg) {
         return []
     };
     ns.cpu.MuteCommandProcessor = MuteCommandProcessor
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Meta = ns.protocol.Meta;
@@ -338,7 +344,7 @@ if (typeof SECHAT !== 'object') {
     var SearchCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
-    Class(SearchCommandProcessor, BaseCommandProcessor, null, {});
+    Class(SearchCommandProcessor, BaseCommandProcessor, null);
     SearchCommandProcessor.prototype.process = function (content, rMsg) {
         parse.call(this, content);
         post_notification('SearchUpdated', this, {'content': content, 'envelope': rMsg.getEnvelope()});
@@ -389,13 +395,14 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.SearchCommandProcessor = SearchCommandProcessor
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var StorageCommand = ns.protocol.StorageCommand;
     var BaseCommandProcessor = ns.cpu.BaseCommandProcessor;
     var StorageCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
-    Class(StorageCommandProcessor, BaseCommandProcessor, null, null);
+    Class(StorageCommandProcessor, BaseCommandProcessor, null);
     StorageCommandProcessor.prototype.process = function (content, rMsg) {
         var title = content.getTitle();
         if (title === StorageCommand.CONTACTS) {
@@ -406,6 +413,7 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.StorageCommandProcessor = StorageCommandProcessor
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Interface = ns.type.Interface;
     var Log = ns.lnc.Log;
     var ID = ns.protocol.ID;
@@ -478,7 +486,11 @@ if (typeof SECHAT !== 'object') {
         if (station) {
             var host = station['host'];
             var port = station['port'];
-            station = '(' + host + ':' + port + ') ' + getUsername(station['ID'])
+            var sid = station['did'];
+            if (!sid) {
+                sid = station['ID']
+            }
+            station = '(' + host + ':' + port + ') ' + getUsername(sid)
         }
         return getUsername(identifier) + ' login: ' + station
     };
@@ -553,13 +565,16 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.MessageBuilder = MessageBuilder
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
+    var Implementation = ns.type.Implementation;
     var Command = ns.protocol.Command;
     var ClientContentProcessorCreator = ns.cpu.ClientContentProcessorCreator;
     var ClientProcessorCreator = function (facebook, messenger) {
         ClientContentProcessorCreator.call(this, facebook, messenger)
     };
-    Class(ClientProcessorCreator, ClientContentProcessorCreator, null, {
+    Class(ClientProcessorCreator, ClientContentProcessorCreator, null);
+    Implementation(ClientProcessorCreator, {
         createContentProcessor: function (type) {
             var facebook = this.getFacebook();
             var messenger = this.getMessenger();
@@ -589,6 +604,7 @@ if (typeof SECHAT !== 'object') {
     ns.cpu.ClientProcessorCreator = ClientProcessorCreator
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Storage = ns.dos.LocalStorage;
@@ -602,7 +618,7 @@ if (typeof SECHAT !== 'object') {
     var UserStorage = function () {
         Object.call(this)
     };
-    Class(UserStorage, Object, [UserDBI], null);
+    Class(UserStorage, Object, [UserDBI]);
     UserStorage.prototype.setCurrentUser = function (user) {
         var localUsers = this.getLocalUsers();
         var pos;
@@ -650,6 +666,7 @@ if (typeof SECHAT !== 'object') {
     ns.database.UserStorage = UserStorage
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Storage = ns.dos.LocalStorage;
@@ -666,7 +683,7 @@ if (typeof SECHAT !== 'object') {
     var GroupStorage = function () {
         Object.call(this)
     };
-    Class(GroupStorage, Object, [GroupDBI], null);
+    Class(GroupStorage, Object, [GroupDBI]);
     GroupStorage.prototype.getFounder = function (group) {
         return null
     };
@@ -718,6 +735,7 @@ if (typeof SECHAT !== 'object') {
     ns.database.GroupStorage = GroupStorage
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var Command = ns.protocol.Command;
     var ReliableMessage = ns.protocol.ReliableMessage;
@@ -729,7 +747,7 @@ if (typeof SECHAT !== 'object') {
     var LoginStorage = function () {
         Object.call(this)
     };
-    Class(LoginStorage, Object, [LoginDBI], null);
+    Class(LoginStorage, Object, [LoginDBI]);
     LoginStorage.prototype.getLoginCommandMessage = function (user) {
         var path = store_path(user);
         var info = Storage.loadJSON(path);
@@ -751,13 +769,14 @@ if (typeof SECHAT !== 'object') {
     ns.database.LoginStorage = LoginStorage
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var MessageStorage = function () {
         Object.call(this);
         this.__instant_messages = {}
     };
-    Class(MessageStorage, Object, null, null);
+    Class(MessageStorage, Object, null);
     var insert_msg = function (messages, msg) {
         var pos = messages.length - 1;
         var msg_time = msg.getFloat('time', 0);
@@ -870,8 +889,9 @@ if (typeof SECHAT !== 'object') {
     ns.database.MessageStorage = MessageStorage
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
-    var SymmetricKey = ns.crypto.SymmetricKey;
+    var SymmetricKey = ns.protocol.SymmetricKey;
     var Storage = ns.dos.SessionStorage;
     var CipherKeyDBI = ns.dbi.CipherKeyDBI;
     var msg_key_path = function (from, to) {
@@ -882,7 +902,7 @@ if (typeof SECHAT !== 'object') {
     var CipherKeyStorage = function () {
         Object.call(this)
     };
-    Class(CipherKeyStorage, Object, [CipherKeyDBI], null);
+    Class(CipherKeyStorage, Object, [CipherKeyDBI]);
     CipherKeyStorage.prototype.getCipherKey = function (from, to, generate) {
         var path = msg_key_path(from, to);
         var info = Storage.loadJSON(path);
@@ -896,6 +916,7 @@ if (typeof SECHAT !== 'object') {
     ns.database.CipherKeyStorage = CipherKeyStorage
 })(DIMP);
 (function (ns) {
+    'use strict';
     var Class = ns.type.Class;
     var ID = ns.protocol.ID;
     var Storage = ns.dos.LocalStorage;
@@ -910,9 +931,15 @@ if (typeof SECHAT !== 'object') {
         var array = Storage.loadJSON(path);
         if (array) {
             var item;
+            var sid;
             for (var i = 0; i < array.length; ++i) {
                 item = array[i];
-                stations.push({'host': item['host'], 'port': item['port'], 'ID': ID.parse(item['ID'])})
+                sid = item['did'];
+                if (!sid) {
+                    sid = item['ID']
+                }
+                sid = ID.parse(sid);
+                stations.push({'host': item['host'], 'port': item['port'], 'did': sid, 'ID': sid})
             }
         }
         return stations
@@ -925,9 +952,12 @@ if (typeof SECHAT !== 'object') {
             item = stations[i];
             host = item['host'];
             port = item['port'];
-            sid = item['ID'];
+            sid = item['did'];
+            if (!sid) {
+                sid = item['ID']
+            }
             if (sid) {
-                array.push({'host': host, 'port': port, 'ID': sid.toString()})
+                array.push({'host': host, 'port': port, 'did': sid.toString(), 'ID': sid.toString()})
             } else {
                 array.push({'host': host, 'port': port})
             }
@@ -949,7 +979,7 @@ if (typeof SECHAT !== 'object') {
         Object.call(this);
         this.__stations = null
     };
-    Class(ProviderStorage, Object, [ProviderDBI], null);
+    Class(ProviderStorage, Object, [ProviderDBI]);
     ProviderStorage.prototype.allNeighbors = function () {
         if (this.__stations === null) {
             this.__stations = load_stations()
@@ -962,7 +992,12 @@ if (typeof SECHAT !== 'object') {
         if (index < 0) {
             return null
         }
-        return stations[index]['ID']
+        var neighbor = stations[index];
+        var sid = neighbor['did'];
+        if (!sid) {
+            sid = neighbor['ID']
+        }
+        return sid
     };
     ProviderStorage.prototype.addNeighbor = function (ip, port, identifier) {
         var stations = this.allNeighbors();
@@ -970,7 +1005,7 @@ if (typeof SECHAT !== 'object') {
         if (index >= 0) {
             return false
         }
-        stations.unshift({'host': ip, 'port': port, 'ID': identifier});
+        stations.unshift({'host': ip, 'port': port, 'did': identifier, 'ID': identifier});
         return save_stations(stations)
     };
     ProviderStorage.prototype.removeNeighbor = function (ip, port) {
@@ -985,6 +1020,7 @@ if (typeof SECHAT !== 'object') {
     ns.database.ProviderStorage = ProviderStorage
 })(DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Hex = sdk.format.Hex;
     var Configuration = {
         getInstance: function () {
@@ -1023,6 +1059,7 @@ if (typeof SECHAT !== 'object') {
     ns.Configuration = Configuration
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Interface = sdk.type.Interface;
     var ContentType = sdk.protocol.ContentType;
     var Entity = sdk.mkm.Entity;
@@ -1078,7 +1115,7 @@ if (typeof SECHAT !== 'object') {
                 continue
             }
             type = iMsg.getType();
-            if (ContentType.TEXT.equals(type) || ContentType.FILE.equals(type) || ContentType.IMAGE.equals(type) || ContentType.AUDIO.equals(type) || ContentType.VIDEO.equals(type) || ContentType.PAGE.equals(type) || ContentType.MONEY.equals(type) || ContentType.TRANSFER.equals(type)) {
+            if (ContentType.TEXT === type || ContentType.FILE === type || ContentType.IMAGE === type || ContentType.AUDIO === type || ContentType.VIDEO === type || ContentType.PAGE === type || ContentType.MONEY === type || ContentType.TRANSFER === type) {
                 return iMsg
             }
         }
@@ -1122,6 +1159,7 @@ if (typeof SECHAT !== 'object') {
     ns.Conversation = Conversation
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Interface = sdk.type.Interface;
     var Arrays = sdk.type.Arrays;
     var Log = sdk.lnc.Log;
@@ -1294,7 +1332,9 @@ if (typeof SECHAT !== 'object') {
     ns.Amanuensis = Amanuensis
 })(SECHAT, DIMP);
 (function (ns, sdk) {
-    var SymmetricKey = sdk.crypto.SymmetricKey;
+    'use strict';
+    var SymmetricKey = sdk.protocol.SymmetricKey;
+    var SymmetricAlgorithms = sdk.protocol.SymmetricAlgorithms;
     var PlainKey = sdk.crypto.PlainKey;
     var PrivateKeyStorage = sdk.database.PrivateKeyStorage;
     var MetaStorage = sdk.database.MetaStorage;
@@ -1496,7 +1536,7 @@ if (typeof SECHAT !== 'object') {
             }
             var key = t_cipher_key.getCipherKey(from, to, generate);
             if (!key && generate) {
-                key = SymmetricKey.generate(SymmetricKey.AES);
+                key = SymmetricKey.generate(SymmetricAlgorithms.AES);
                 t_cipher_key.cacheCipherKey(from, to, key)
             }
             return key
@@ -1599,6 +1639,7 @@ if (typeof SECHAT !== 'object') {
     ns.SharedDatabase = SharedDatabase
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Interface = sdk.type.Interface;
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
@@ -1609,7 +1650,7 @@ if (typeof SECHAT !== 'object') {
     var Emitter = function () {
         Object.call(this)
     };
-    Class(Emitter, Object, null, null);
+    Class(Emitter, Object, null);
     Emitter.prototype.sendInstantMessage = function (iMsg, priority) {
         var rMsg;
         var receiver = iMsg.getReceiver();
@@ -1686,12 +1727,15 @@ if (typeof SECHAT !== 'object') {
     ns.Emitter = Emitter
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Class = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
     var ClientFacebook = sdk.ClientFacebook;
     var SharedFacebook = function (database) {
         ClientFacebook.call(this, database)
     };
-    Class(SharedFacebook, ClientFacebook, null, {
+    Class(SharedFacebook, ClientFacebook, null);
+    Implementation(SharedFacebook, {
         getAvatar: function (identifier) {
             var doc = this.getVisa(identifier);
             if (doc) {
@@ -1715,13 +1759,14 @@ if (typeof SECHAT !== 'object') {
     ns.SharedFacebook = SharedFacebook
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Class = sdk.type.Class;
     var Log = sdk.lnc.Log;
     var ClientArchivist = sdk.ClientArchivist;
     var SharedArchivist = function (facebook, database) {
         ClientArchivist.call(this, facebook, database)
     };
-    Class(SharedArchivist, ClientArchivist, null, null);
+    Class(SharedArchivist, ClientArchivist, null);
     SharedArchivist.prototype.getFacebook = function () {
         return ns.GlobalVariable.getFacebook()
     };
@@ -1732,11 +1777,11 @@ if (typeof SECHAT !== 'object') {
         var messenger = this.getMessenger();
         return messenger.getSession()
     };
-    SharedArchivist.prototype.checkMeta = function (identifier, meta) {
+    SharedArchivist.prototype.checkMeta = function (meta, identifier) {
         if (identifier.isBroadcast()) {
             return false
         }
-        return ClientArchivist.prototype.checkMeta.call(this, identifier, meta)
+        return ClientArchivist.prototype.checkMeta.call(this, meta, identifier)
     };
     SharedArchivist.prototype.checkDocuments = function (identifier, documents) {
         if (identifier.isBroadcast()) {
@@ -1777,8 +1822,10 @@ if (typeof SECHAT !== 'object') {
     ns.SharedArchivist = SharedArchivist
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Interface = sdk.type.Interface;
     var Class = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
     var Log = sdk.lnc.Log;
     var ID = sdk.protocol.ID;
     var Document = sdk.protocol.Document;
@@ -1790,7 +1837,8 @@ if (typeof SECHAT !== 'object') {
     var SharedMessenger = function (session, facebook, db) {
         ClientMessenger.call(this, session, facebook, db)
     };
-    Class(SharedMessenger, ClientMessenger, null, {
+    Class(SharedMessenger, ClientMessenger, null);
+    Implementation(SharedMessenger, {
         encryptKey: function (keyData, receiver, iMsg) {
             try {
                 return ClientMessenger.prototype.encryptKey.call(this, keyData, receiver, iMsg)
@@ -1920,15 +1968,18 @@ if (typeof SECHAT !== 'object') {
     ns.SharedMessenger = SharedMessenger
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Interface = sdk.type.Interface;
     var Class = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
     var Log = sdk.lnc.Log;
     var FileContent = sdk.protocol.FileContent;
     var ClientMessagePacker = sdk.ClientMessagePacker;
     var SharedPacker = function (facebook, messenger) {
         ClientMessagePacker.call(this, facebook, messenger)
     };
-    Class(SharedPacker, ClientMessagePacker, null, {
+    Class(SharedPacker, ClientMessagePacker, null);
+    Implementation(SharedPacker, {
         encryptMessage: function (iMsg) {
             var content = iMsg.getContent();
             if (Interface.conforms(content, FileContent)) {
@@ -1946,13 +1997,16 @@ if (typeof SECHAT !== 'object') {
     ns.SharedPacker = SharedPacker
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Class = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
     var Log = sdk.lnc.Log;
     var ClientMessageProcessor = sdk.ClientMessageProcessor;
     var SharedProcessor = function (facebook, messenger) {
         ClientMessageProcessor.call(this, facebook, messenger)
     };
-    Class(SharedProcessor, ClientMessageProcessor, null, {
+    Class(SharedProcessor, ClientMessageProcessor, null);
+    Implementation(SharedProcessor, {
         createCreator: function () {
             var facebook = this.getFacebook();
             var messenger = this.getMessenger();
@@ -1977,7 +2031,9 @@ if (typeof SECHAT !== 'object') {
     ns.SharedProcessor = SharedProcessor
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var Class = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
     var Log = sdk.lnc.Log;
     var NotificationCenter = sdk.lnc.NotificationCenter;
     var SessionStateOrder = sdk.network.SessionStateOrder;
@@ -1986,7 +2042,8 @@ if (typeof SECHAT !== 'object') {
     var Client = function (facebook, sdb) {
         Terminal.call(this, facebook, sdb)
     };
-    Class(Client, Terminal, null, {
+    Class(Client, Terminal, null);
+    Implementation(Client, {
         getSessionState: function () {
             var session = this.getSession();
             return !session ? null : session.getState()
@@ -2013,8 +2070,6 @@ if (typeof SECHAT !== 'object') {
                 return 'Disconnected'
             }
         }, reconnect: function () {
-            // return this.connect('106.52.25.169', 9394);
-            // return this.connect('170.106.141.194', 9394);
             return this.connect('129.226.12.4', 9394);
             var station = this.getNeighborStation();
             if (!station) {
@@ -2055,6 +2110,7 @@ if (typeof SECHAT !== 'object') {
     ns.Client = Client
 })(SECHAT, DIMP);
 (function (ns, sdk) {
+    'use strict';
     var shared = {database: null, facebook: null, session: null, messenger: null, emitter: null, terminal: null};
     var GlobalVariable = {
         getDatabase: function () {
@@ -2086,7 +2142,13 @@ if (typeof SECHAT !== 'object') {
                     messenger = new ns.SharedMessenger(session, facebook, database);
                     shared.messenger = messenger;
                     var sgm = sdk.group.SharedGroupManager.getInstance();
-                    sgm.setMessenger(messenger)
+                    sgm.setMessenger(messenger);
+                    var checker = facebook.getEntityChecker();
+                    if (checker instanceof ns.ClientChecker) {
+                        checker.setMessenger(messenger)
+                    } else {
+                        throw new Error('entity checker error: ' + checker);
+                    }
                 } else {
                     throw new ReferenceError('session not connected');
                 }

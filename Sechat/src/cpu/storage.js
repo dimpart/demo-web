@@ -45,7 +45,7 @@
     var StorageCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger);
     };
-    Class(StorageCommandProcessor, BaseCommandProcessor, null, null);
+    Class(StorageCommandProcessor, BaseCommandProcessor, null);
 
     // Override
     StorageCommandProcessor.prototype.process = function (content, rMsg) {

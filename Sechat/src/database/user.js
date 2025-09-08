@@ -54,7 +54,7 @@
     var UserStorage = function () {
         Object.call(this);
     };
-    Class(UserStorage, Object, [UserDBI], null);
+    Class(UserStorage, Object, [UserDBI]);
 
     UserStorage.prototype.setCurrentUser = function (user) {
         var localUsers = this.getLocalUsers();

@@ -30,15 +30,18 @@
 (function (ns, sdk) {
     'use strict';
 
-    var Class = sdk.type.Class;
-    var Log   = sdk.lnc.Log;
+    var Class          = sdk.type.Class;
+    var Implementation = sdk.type.Implementation;
+    var Log            = sdk.lnc.Log;
 
     var ClientMessageProcessor = sdk.ClientMessageProcessor;
 
     var SharedProcessor = function (facebook, messenger) {
         ClientMessageProcessor.call(this, facebook, messenger);
     };
-    Class(SharedProcessor, ClientMessageProcessor, null, {
+    Class(SharedProcessor, ClientMessageProcessor, null);
+
+    Implementation(SharedProcessor, {
 
         // Override
         createCreator: function () {

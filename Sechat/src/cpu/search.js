@@ -48,9 +48,7 @@
     var SearchCommandProcessor = function (facebook, messenger) {
         BaseCommandProcessor.call(this, facebook, messenger);
     };
-    Class(SearchCommandProcessor, BaseCommandProcessor, null, {
-
-    });
+    Class(SearchCommandProcessor, BaseCommandProcessor, null);
 
     // @Override
     SearchCommandProcessor.prototype.process = function (content, rMsg) {
