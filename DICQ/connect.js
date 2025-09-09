@@ -80,14 +80,16 @@
     var host = $_GET['host'];
     if (!host) {
         // host = '127.0.0.1';
-        // host = '192.168.31.91';
-        host = '106.52.25.169';   // gz
-        // host = '124.156.108.150'; // hk
+        // host = '192.168.31.77';
+        host = '129.226.12.4';  // hk4
     }
     var port = $_GET['port'];
     if (!port) {
         port = 9394;
     }
+
+    var Log = app.lnc.Log;
+    Log.level = Log.DEBUG;
 
     var application = ns.Application.getInstance();
     application.reconnect = function () {

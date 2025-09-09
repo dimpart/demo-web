@@ -55,7 +55,7 @@
     var Anonymous = app.Anonymous;
     var NotificationNames = app.NotificationNames;
 
-    var Terminal = app.network.Terminal;
+    var Terminal = app.Terminal;
 
     var get_database = function () {
         return app.GlobalVariable.getDatabase();
@@ -105,7 +105,7 @@
             identifier = userInfo['ID'];
             res = '[Meta saved] ID: ' + identifier;
         } else if (name === NotificationNames.DocumentUpdated) {
-            doc = Document.parse(userInfo);
+            doc = Document.parse(userInfo['document']);
             res = '[Document updated] ID: ' + doc.getIdentifier()
                 + ' -> ' + doc.getValue('data');
         } else if (name === NotificationNames.MessageUpdated) {
@@ -222,8 +222,8 @@
         if (user) {
             // login
             // connect('127.0.0.1', 9394);
-            // connect('192.168.31.91', 9394);
-            connect('106.52.25.169', 9394);  // gz
+            // connect('192.168.31.77', 9394);
+            connect('129.226.12.4', 9394);  // hk4
             app.GlobalVariable.setCurrentUser(user.getIdentifier());
             ns.LoginWindow.show(user);
         } else {
@@ -237,7 +237,7 @@
             var facebook = app.GlobalVariable.getFacebook();
             return facebook.getCurrentUser();
         } catch (e) {
-            console.error('failed to get current user');
+            console.error('failed to get current user:', e);
             return null;
         }
     };

@@ -185,7 +185,11 @@ if (typeof dterm !== 'object') {
             'sdk/useragent.js',
 
             /* DIM SDK */
-            'libs/dimples.min.js',
+            'sdk/dimsdk.min.js',
+            'sdk/network.min.js',
+            'sdk/client.min.js',
+            // 'sdk/dimples.min.js',
+
             'libs/sechat.min.js',
             null
         ];
@@ -203,7 +207,11 @@ if (typeof dterm !== 'object') {
             'sdk/useragent.js',
 
             /* DIM SDK */
-            'libs/dimples.js',
+            'sdk/dimsdk.js',
+            'sdk/network.js',
+            'sdk/client.js',
+            // 'sdk/dimples.js',
+
             'libs/sechat.js',
             null
         ];

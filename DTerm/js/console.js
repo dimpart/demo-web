@@ -134,6 +134,7 @@ $(function() {
             } catch (e) {
                 val_ouput = '\'' + cmd + '\': command not found';
                 err_class = ' error';
+                console.error('failed to exec "' + cmd + '":', e);
             }
 
             if (val_ouput) {

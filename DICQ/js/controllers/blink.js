@@ -46,7 +46,7 @@
 
     // Override
     NewMessageController.prototype.tick = function (now, elapsed) {
-        this.__elapsed += elapsed;
+        this.__elapsed += elapsed.inMilliseconds();
         if (this.__elapsed > 512) {
             this.__elapsed = 0;
             check_dancing.call(this);

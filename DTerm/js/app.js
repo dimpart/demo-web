@@ -16,7 +16,7 @@
     var NotificationNames    = sdk.NotificationNames;
 
     var SessionStateOrder = sdk.network.SessionStateOrder;
-    var Terminal          = sdk.network.Terminal;
+    var Terminal          = sdk.Terminal;
 
     var Anonymous = sdk.Anonymous;
     var Register  = sdk.Register;
@@ -44,7 +44,7 @@
         nc.addObserver(this, NotificationNames.DocumentUpdated);
         nc.addObserver(this, NotificationNames.MessageUpdated);
     };
-    Class(Application, Terminal, [NotificationObserver], null);
+    Class(Application, Terminal, [NotificationObserver]);
 
     var s_application = null;
     Application.getInstance = function () {
@@ -127,7 +127,7 @@
             identifier = userInfo['ID'];
             this.tips('[Meta saved] ID: ' + identifier);
         } else if (name === NotificationNames.DocumentUpdated) {
-            doc = Document.parse(userInfo);
+            doc = Document.parse(userInfo['document']);
             this.tips('[Document updated] ID: ' + doc.getIdentifier()
                 + ' -> ' + doc.getValue('data'));
             // // chatroom

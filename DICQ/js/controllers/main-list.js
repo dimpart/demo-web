@@ -94,9 +94,9 @@
                 console.error('ID error: ' + contacts[i]);
                 continue;
             }
-            if (EntityType.BOT.equals(id.getType())) {
+            if (EntityType.BOT === id.getType()) {
                 robots.push(id);
-            } else if (EntityType.STATION.equals(id.getType())) {
+            } else if (EntityType.STATION === id.getType()) {
                 robots.push(id);
             } else if (id.isGroup()) {
                 groups.push(id);
@@ -119,7 +119,7 @@
                 strangers.splice(j, 1);
             } else if (robots.indexOf(id) >= 0) {
                 strangers.splice(j, 1);
-                // } else if (EntityType.BOT.equals(id.getType())) {
+                // } else if (EntityType.BOT === id.getType()) {
                 //     robots.push(id);
                 //     strangers.splice(j, 1);
             }

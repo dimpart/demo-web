@@ -51,6 +51,16 @@
 
 }(DIMP);
 
+!function (sdk) {
+    'use strict';
+
+    var Log = sdk.lnc.Log;
+    Log.level = Log.DEBUG;
+
+    Log.info('Log start');
+
+}(DIMP);
+
 // !function (ns, dimp) {
 //     'use strict';
 //

@@ -199,9 +199,10 @@ if (typeof dicq !== 'object') {
 
             /* DIM SDK */
             'sdk/dimsdk.min.js',
-            'libs/common.min.js',
-            'libs/client.min.js',
-            // 'libs/dimples.min.js',
+            'sdk/network.min.js',
+            'sdk/client.min.js',
+            // 'sdk/dimples.min.js',
+
             'libs/sechat.min.js',
             null
         ];
@@ -220,9 +221,10 @@ if (typeof dicq !== 'object') {
 
             /* DIM SDK */
             'sdk/dimsdk.js',
-            'libs/common.js',
-            'libs/client.js',
-            // 'libs/dimples.js',
+            'sdk/network.js',
+            'sdk/client.js',
+            // 'sdk/dimples.js',
+
             'libs/sechat.js',
             null
         ];
