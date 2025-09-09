@@ -52,7 +52,7 @@
     Class(AnyContentProcessor, BaseContentProcessor, null);
 
     // Override
-    AnyContentProcessor.prototype.process = function (content, rMsg) {
+    AnyContentProcessor.prototype.processContent = function (content, rMsg) {
         var text;
 
         // File: Image, Audio, Video

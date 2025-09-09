@@ -48,7 +48,7 @@
     Class(StorageCommandProcessor, BaseCommandProcessor, null);
 
     // Override
-    StorageCommandProcessor.prototype.process = function (content, rMsg) {
+    StorageCommandProcessor.prototype.processContent = function (content, rMsg) {
         var title = content.getTitle();
         if (title === StorageCommand.CONTACTS) {
             // process contacts

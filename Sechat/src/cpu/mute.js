@@ -42,7 +42,7 @@
     Class(MuteCommandProcessor, BaseCommandProcessor, null);
 
     // Override
-    MuteCommandProcessor.prototype.process = function (content, rMsg) {
+    MuteCommandProcessor.prototype.processContent = function (content, rMsg) {
 
         // no need to response mute command
         return [];

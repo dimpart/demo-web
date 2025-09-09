@@ -42,7 +42,7 @@
     Class(BlockCommandProcessor, BaseCommandProcessor, null);
 
     // Override
-    BlockCommandProcessor.prototype.process = function (content, rMsg) {
+    BlockCommandProcessor.prototype.processContent = function (content, rMsg) {
 
         // no need to response block command
         return [];

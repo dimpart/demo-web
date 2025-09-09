@@ -279,7 +279,7 @@ if (typeof SECHAT !== 'object') {
         BaseContentProcessor.call(this, facebook, messenger)
     };
     Class(AnyContentProcessor, BaseContentProcessor, null);
-    AnyContentProcessor.prototype.process = function (content, rMsg) {
+    AnyContentProcessor.prototype.processContent = function (content, rMsg) {
         var text;
         if (Interface.conforms(content, FileContent)) {
             if (Interface.conforms(content, ImageContent)) {
@@ -315,7 +315,7 @@ if (typeof SECHAT !== 'object') {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
     Class(BlockCommandProcessor, BaseCommandProcessor, null);
-    BlockCommandProcessor.prototype.process = function (content, rMsg) {
+    BlockCommandProcessor.prototype.processContent = function (content, rMsg) {
         return []
     };
     ns.cpu.BlockCommandProcessor = BlockCommandProcessor
@@ -328,7 +328,7 @@ if (typeof SECHAT !== 'object') {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
     Class(MuteCommandProcessor, BaseCommandProcessor, null);
-    MuteCommandProcessor.prototype.process = function (content, rMsg) {
+    MuteCommandProcessor.prototype.processContent = function (content, rMsg) {
         return []
     };
     ns.cpu.MuteCommandProcessor = MuteCommandProcessor
@@ -345,7 +345,7 @@ if (typeof SECHAT !== 'object') {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
     Class(SearchCommandProcessor, BaseCommandProcessor, null);
-    SearchCommandProcessor.prototype.process = function (content, rMsg) {
+    SearchCommandProcessor.prototype.processContent = function (content, rMsg) {
         parse.call(this, content);
         post_notification('SearchUpdated', this, {'content': content, 'envelope': rMsg.getEnvelope()});
         return []
@@ -403,7 +403,7 @@ if (typeof SECHAT !== 'object') {
         BaseCommandProcessor.call(this, facebook, messenger)
     };
     Class(StorageCommandProcessor, BaseCommandProcessor, null);
-    StorageCommandProcessor.prototype.process = function (content, rMsg) {
+    StorageCommandProcessor.prototype.processContent = function (content, rMsg) {
         var title = content.getTitle();
         if (title === StorageCommand.CONTACTS) {
         } else if (title === StorageCommand.PRIVATE_KEY) {

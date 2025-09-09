@@ -51,7 +51,7 @@
     Class(SearchCommandProcessor, BaseCommandProcessor, null);
 
     // @Override
-    SearchCommandProcessor.prototype.process = function (content, rMsg) {
+    SearchCommandProcessor.prototype.processContent = function (content, rMsg) {
         parse.call(this, content);
 
         post_notification('SearchUpdated', this, {
